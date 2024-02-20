@@ -104,6 +104,7 @@ class PlayerList:
     def delete_from_the_head(self):
         """
         Delete the player from the head of the player list
+
         Returns:
             None
         """
@@ -121,6 +122,7 @@ class PlayerList:
     def delete_from_the_tail(self):
         """
         Delete the player from the tail of the player list
+
         Returns:
             None
         """
@@ -135,5 +137,26 @@ class PlayerList:
                 self._head = None
         return popped_node.player.name
 
+    def delete_by_key(self, player_id: str):
+        """
+        Delete the player with specified id from the player list
+        Args:
+            player_id (int): Unique id of the player
 
+        Returns:
+            None
+        """
+        current_player = self._head
+        while current_player is not None:
+            if current_player.key == player_id:
+                if current_player.prev is None:
+                    self._head = current_player.next
+                else:
+                    current_player.prev.next = current_player.next
+                    if current_player.next is not None:
+                        current_player.next.prev = current_player.prev
+                    return
+            return 'Player removed from the list'
+
+        return 'Player not found'
 

@@ -90,8 +90,14 @@ class PlayerTest(unittest.TestCase):
         self.assertEqual(dl_list.delete_from_the_tail(), 'Rose')
         self.assertEqual(dl_list.is_empty(), True)
 
+    def test_for_delete_by_key_when_list_empty(self):
+        dl_list = PlayerList()
+        self.assertEqual(dl_list.delete_by_key('2'), 'Player not found')
 
-
+    def test_for_delete_by_key_when_list_contains(self):
+        dl_list = PlayerList()
+        dl_list.push('3', 'Rose')
+        self.assertEqual(dl_list.delete_by_key('3'), 'Player removed from the list')
 
 
 if __name__ == '__main__':
