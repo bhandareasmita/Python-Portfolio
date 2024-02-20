@@ -106,7 +106,6 @@ class PlayerList:
         Delete the player from the head of the player list
         Returns:
             None
-
         """
         if self.is_empty():
             return "List is empty"
@@ -117,6 +116,23 @@ class PlayerList:
                 self._head.prev = None
             else:
                 self._tail = None
+        return popped_node.player.name
+
+    def delete_from_the_tail(self):
+        """
+        Delete the player from the tail of the player list
+        Returns:
+            None
+        """
+        if self.is_empty():
+            return "List is empty"
+        else:
+            popped_node = self._tail
+            self._tail = popped_node.prev
+            if self._tail is not None:
+                self._tail.next = None
+            else:
+                self._head = None
         return popped_node.player.name
 
 

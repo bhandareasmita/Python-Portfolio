@@ -54,11 +54,11 @@ class PlayerTest(unittest.TestCase):
         self.assertEqual(dl_list.get_tail().player.name, 'Sammy')
         self.assertEqual(dl_list.get_tail().prev.player.name, 'Asmita')
 
-    def test_for_delete_from_the_tail_when_list_empty(self):
+    def test_for_delete_from_the_head_when_list_empty(self):
         dl_list = PlayerList()
         self.assertEqual(dl_list.delete_from_the_head(), 'List is empty')
 
-    def test_for_delete_from_the_tail_when_list_contains(self):
+    def test_for_delete_from_the_head_when_list_contains(self):
         dl_list = PlayerList()
         dl_list.push('3', 'Rose')
         dl_list.push('4', 'John')
@@ -66,11 +66,32 @@ class PlayerTest(unittest.TestCase):
         self.assertEqual(dl_list.get_tail().player.name, 'Rose')
         self.assertEqual(dl_list.get_tail().player.name, 'Rose')
 
-    def test_for_delete_from_the_tail_when_list_contains_single_node(self):
+    def test_for_delete_from_the_head_when_list_contains_single_node(self):
         dl_list = PlayerList()
         dl_list.push('3', 'Rose')
         self.assertEqual(dl_list.delete_from_the_head(), 'Rose')
         self.assertEqual(dl_list.is_empty(), True)
+
+    def test_for_delete_from_the_tail_when_list_empty(self):
+        dl_list = PlayerList()
+        self.assertEqual(dl_list.delete_from_the_tail(), 'List is empty')
+
+    def test_for_delete_from_the_tail_when_list_contains(self):
+        dl_list = PlayerList()
+        dl_list.push('3', 'Rose')
+        dl_list.push('4', 'John')
+        self.assertEqual(dl_list.delete_from_the_tail(), 'Rose')
+        self.assertEqual(dl_list.get_tail().player.name, 'John')
+        self.assertEqual(dl_list.get_tail().player.name, 'John')
+
+    def test_for_delete_from_the_tail_when_list_contains_single_node(self):
+        dl_list = PlayerList()
+        dl_list.push('3', 'Rose')
+        self.assertEqual(dl_list.delete_from_the_tail(), 'Rose')
+        self.assertEqual(dl_list.is_empty(), True)
+
+
+
 
 
 if __name__ == '__main__':
