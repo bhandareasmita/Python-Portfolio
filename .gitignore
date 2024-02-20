@@ -171,6 +171,5 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 # LECTURERS NOTE: for your personal work, you may want to include the .idea/ folder but please do not submit.
 # Ditto if you are using vscode
-.idea/
 
->>>>>>> 599b0b6450c227136582d889f184cac263084ffc
+
