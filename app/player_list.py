@@ -188,3 +188,4 @@ class PlayerList:
                 backward_table.add_row([current_node.key, current_node.player.name])
                 current_node = current_node.prev
             return backward_table
+
