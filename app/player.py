@@ -2,22 +2,22 @@ class Player:
     """
     Represents a player in a game
     """
-    def __init__(self, uid: int, name: str):
+    def __init__(self, uid: str, name: str):
         """
         Initializes a new Player object
         Args:
-            uid (int): The unique identifier for the player.
+            uid (str): The unique identifier for the player.
             name (str): The name of the player.
         """
         self._uid = uid
         self._name = name
 
     @property
-    def uid(self) -> int:
+    def uid(self) -> str:
         """
         Gets the unique identifier of the player
         Returns:
-            int: The unique identifier of the player.
+            str: The unique identifier of the player.
         """
         return self._uid
 
