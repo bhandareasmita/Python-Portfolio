@@ -28,7 +28,7 @@ class PlayerNode:
         return self._player
 
     @property
-    def key(self):
+    def key(self) -> str:
         """
         Get the unique identifier of the player
         Returns:

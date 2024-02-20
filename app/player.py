@@ -6,8 +6,8 @@ class Player:
         """
         Initializes a new Player object
         Args:
-            uid (str): The unique identifier for the player.
-            name (str): The name of the player.
+            uid: The unique identifier for the player.
+            name: The name of the player.
         """
         self._uid = uid
         self._name = name

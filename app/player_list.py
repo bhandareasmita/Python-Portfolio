@@ -1,5 +1,6 @@
 from player_node import PlayerNode
 from player import Player
+from prettytable import PrettyTable
 
 
 class PlayerList:
@@ -13,7 +14,8 @@ class PlayerList:
         self._head = None
         self._tail = None
 
-    def get_head(self):
+    @property
+    def head(self):
         """
         Get the head of the player list
         Returns:
@@ -21,7 +23,8 @@ class PlayerList:
         """
         return self._head
 
-    def set_head(self, node):
+    @head.setter
+    def head(self, node):
         """
         Set the head of the player list to the specified node
         Args:
@@ -31,7 +34,8 @@ class PlayerList:
         """
         self._head = node
 
-    def get_tail(self):
+    @property
+    def tail(self):
         """
         Get the tail of the player list
         Returns:
@@ -39,7 +43,8 @@ class PlayerList:
         """
         return self._tail
 
-    def set_tail(self, node):
+    @tail.setter
+    def tail(self, node: PlayerNode):
         """
         Set the tail of the player list to the specified node
         Args:
@@ -49,18 +54,16 @@ class PlayerList:
         """
         self._tail = node
 
-    def is_empty(self):
+    def is_empty(self) -> bool:
         """
         Check if the player list is empty
 
         Returns:
             True if the player list is empty, False otherwise
         """
-        if self.get_head() is None:
-            return True
-        return False
+        return self.head is None
 
-    def push(self, player_id, player_name):
+    def push(self, player_id: str, player_name: str) -> None:
         """
         Add a player to the player list
         Args:
@@ -72,15 +75,15 @@ class PlayerList:
         """
         new_player = PlayerNode(Player(player_id, player_name))
         if self.is_empty():
-            self.set_head(new_player)
-            self.set_tail(new_player)
+            self.head = new_player
+            self.tail = new_player
         else:
-            new_player.next = self.get_head()
-            self.get_head().prev = new_player
-            self.set_head(new_player)
+            new_player.next = self.head
+            self.head.prev = new_player
+            self.head = new_player
             new_player.prev = None
 
-    def insert_at_the_tail(self, player_id, player_name):
+    def insert_at_the_tail(self, player_id: str, player_name: str) -> None:
         """
         Add a player to the tail of the player list
         Args:
@@ -92,71 +95,96 @@ class PlayerList:
         """
         new_player = PlayerNode(Player(player_id, player_name))
         if self.is_empty():
-            self.set_head(new_player)
-            self.set_tail(new_player)
+            self.head = new_player
+            self.tail = new_player
         else:
-            last_node = self.get_tail()
+            last_node = self.tail
             new_player.prev = last_node
             last_node.next = new_player
             new_player.next = None
-            self.set_tail(new_player)
+            self.tail = new_player
 
-    def delete_from_the_head(self):
+    def delete_from_the_head(self) -> str:
         """
         Delete the player from the head of the player list
 
         Returns:
-            None
+            str: Name of the removed player
         """
         if self.is_empty():
             return "List is empty"
         else:
-            popped_node = self._head
-            self._head = popped_node.next
-            if self._head is not None:
-                self._head.prev = None
+            popped_node = self.head
+            self.head = popped_node.next
+            if self.head is not None:
+                self.head.prev = None
             else:
-                self._tail = None
+                self.tail = None
         return popped_node.player.name
 
-    def delete_from_the_tail(self):
+    def delete_from_the_tail(self) -> str:
         """
         Delete the player from the tail of the player list
 
         Returns:
-            None
+            str: Name of the removed player
         """
         if self.is_empty():
             return "List is empty"
         else:
-            popped_node = self._tail
-            self._tail = popped_node.prev
-            if self._tail is not None:
-                self._tail.next = None
+            popped_node = self.tail
+            self.tail = popped_node.prev
+            if self.tail is not None:
+                self.tail.next = None
             else:
-                self._head = None
+                self.head = None
         return popped_node.player.name
 
-    def delete_by_key(self, player_id: str):
+    def delete_by_key(self, player_id: str) -> str | None:
         """
         Delete the player with specified id from the player list
         Args:
             player_id (int): Unique id of the player
 
         Returns:
-            None
+            str: Indicating whether the player was found and deleted or not
         """
-        current_player = self._head
+        current_player = self.head
         while current_player is not None:
             if current_player.key == player_id:
                 if current_player.prev is None:
-                    self._head = current_player.next
+                    self.head = current_player.next
                 else:
                     current_player.prev.next = current_player.next
                     if current_player.next is not None:
                         current_player.next.prev = current_player.prev
-                    return
-            return 'Player removed from the list'
-
+                return 'Player removed from the list'
+            current_player = current_player.next
         return 'Player not found'
 
+    def display_player_list(self, forward=True) -> PrettyTable:
+        """
+        Display the player list in a forward or a reverse direction
+        Args:
+            forward (bool): Include forward or reverse direction, defaults to True
+
+        Returns:
+            PrettyTable: Table of the player list
+        """
+        forward_table = PrettyTable(['Player ID', 'Player Name'])
+        forward_table.title = " FORWARD Player List"
+        backward_table = PrettyTable(['Player ID', 'Player Name'])
+        backward_table.title = " BACKWARD Player List"
+        if forward:
+            current_node = self.head
+            while current_node:
+                forward_table.add_row([current_node.key, current_node.player.name])
+                current_node = current_node.next
+            return forward_table
+
+        else:
+            current_node = self.tail
+            while current_node:
+                backward_table.add_row([current_node.key, current_node.player.name])
+                current_node = current_node.prev
+            return backward_table
