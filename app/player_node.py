@@ -42,5 +42,5 @@ class PlayerNode:
         Returns:
             str: String representation of the node
         """
-        return f"{self.player.uid} : {self.player.name}"
+        return f'Name: {self.player.name}\tId: {self.player.uid}'
 

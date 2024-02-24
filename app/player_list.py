@@ -82,6 +82,7 @@ class PlayerList:
             self.head.prev = new_player
             self.head = new_player
             new_player.prev = None
+        print(f'{new_player} is added to the player list')
 
     def insert_at_the_tail(self, player_id: str, player_name: str) -> None:
         """
@@ -103,6 +104,7 @@ class PlayerList:
             last_node.next = new_player
             new_player.next = None
             self.tail = new_player
+        print(f'{new_player} is added to the player list')
 
     def delete_from_the_head(self) -> str:
         """
@@ -120,6 +122,8 @@ class PlayerList:
                 self.head.prev = None
             else:
                 self.tail = None
+
+        print(f'{popped_node} is removed from the player list')
         return popped_node.player.name
 
     def delete_from_the_tail(self) -> str:
@@ -138,6 +142,7 @@ class PlayerList:
                 self.tail.next = None
             else:
                 self.head = None
+        print(f'{popped_node} is removed from the player list')
         return popped_node.player.name
 
     def delete_by_key(self, player_id: str) -> str | None:
@@ -158,8 +163,10 @@ class PlayerList:
                     current_player.prev.next = current_player.next
                     if current_player.next is not None:
                         current_player.next.prev = current_player.prev
+                print(f'{current_player} is removed from the player list')
                 return 'Player removed from the list'
             current_player = current_player.next
+        print('Invalid player ID provided')
         return 'Player not found'
 
     def display_player_list(self, forward=True) -> PrettyTable:
